@@ -74,11 +74,21 @@ echo "Installing MesloLGS NF fonts (for Powerlevel10k)..."
 FONT_DIR="$HOME/.local/share/fonts"
 mkdir -p "$FONT_DIR"
 
-for font in "Regular" "Bold" "Italic" "Bold+Italic"; do
-    echo "Downloading MesloLGS NF ${font}..."
-    curl -fsSL "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS+NF+${font}.ttf" \
-        -o "$FONT_DIR/MesloLGS+NF+${font}.ttf" || echo "⚠️  Failed to download MesloLGS NF ${font}."
-done
+download_font() {
+    local name="$1"
+    local url="https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20${name}.ttf"
+    echo "Downloading MesloLGS NF ${name}..."
+    if command -v wget >/dev/null 2>&1; then
+        wget -q --show-progress -O "$FONT_DIR/MesloLGS NF ${name}.ttf" "$url" || echo "⚠️  Failed to download ${name}"
+    else
+        curl -fsSL "$url" -o "$FONT_DIR/MesloLGS NF ${name}.ttf" || echo "⚠️  Failed to download ${name}"
+    fi
+}
+
+download_font "Regular"
+download_font "Bold"
+download_font "Italic"
+download_font "Bold Italic"
 
 fc-cache -fv >/dev/null 2>&1 || true
 
