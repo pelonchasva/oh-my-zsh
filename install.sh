@@ -73,10 +73,22 @@ curl -fsSL "$ZSHRC_URL" -o "$HOME/.zshrc"
 echo "Installing MesloLGS NF fonts (for Powerlevel10k)..."
 FONT_DIR="$HOME/.local/share/fonts"
 mkdir -p "$FONT_DIR"
-for font in Regular Bold Italic 'Bold Italic'; do
-    curl -fsSL "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20${font}.ttf" \
-        -o "$FONT_DIR/MesloLGS NF ${font}.ttf"
+
+# List of URL-safe filenames
+declare -A FONTS=(
+    ["Regular"]="MesloLGS%20NF%20Regular.ttf"
+    ["Bold"]="MesloLGS%20NF%20Bold.ttf"
+    ["Italic"]="MesloLGS%20NF%20Italic.ttf"
+    ["Bold Italic"]="MesloLGS%20NF%20Bold%20Italic.ttf"
+)
+
+for STYLE in "${!FONTS[@]}"; do
+    FILE_NAME="${FONTS[$STYLE]}"
+    echo "Downloading MesloLGS NF ${STYLE}..."
+    curl -fsSL "https://github.com/romkatv/powerlevel10k-media/raw/master/${FILE_NAME}" \
+        -o "$FONT_DIR/MesloLGS NF ${STYLE}.ttf" || echo "⚠️  Failed to download ${STYLE} font."
 done
+
 fc-cache -fv >/dev/null 2>&1 || true
 
 # === SHELL ===
