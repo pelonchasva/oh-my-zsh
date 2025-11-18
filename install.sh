@@ -6,9 +6,11 @@
 set -e
 
 # === CONFIGURATION ===
-ZSHRC_URL="https://raw.githubusercontent.com/pelonchasva/oh-my-zsh/main/.zshrc"
+BASE_GIT_URL="https://raw.githubusercontent.com/pelonchasva/oh-my-zsh/main"
+ZSHRC_URL="$BASE_GIT_URL/.zshrc"
+P10K_ZSH_URL="$BASE_GIT_URL/.p10k.zsh"
 # Optional: use raw URLs for any custom additions
-# CUSTOM_ALIASES_URL="https://raw.githubusercontent.com/pelonchasva/oh-my-zsh/main/aliases.zsh"
+# CUSTOM_ALIASES_URL="$BASE_GIT_URL/aliases.zsh"
 
 # === DEPENDENCIES ===
 if command -v apt >/dev/null 2>&1; then
@@ -65,7 +67,7 @@ echo "Downloading your .zshrc..."
 curl -fsSL "$ZSHRC_URL" -o "$HOME/.zshrc"
 
 echo "Downloading your .p10k.zsh..."
-curl -fsSL "$ZSHRC_URL" -o "$HOME/.p10k.zsh"
+curl -fsSL "$P10K_ZSH_URL" -o "$HOME/.p10k.zsh"
 
 # (Optional) include extra configs, e.g. aliases
 # if [ -n "$CUSTOM_ALIASES_URL" ]; then
