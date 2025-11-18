@@ -64,6 +64,9 @@ fi
 echo "Downloading your .zshrc..."
 curl -fsSL "$ZSHRC_URL" -o "$HOME/.zshrc"
 
+echo "Downloading your .p10k.zsh..."
+curl -fsSL "$ZSHRC_URL" -o "$HOME/.p10k.zsh"
+
 # (Optional) include extra configs, e.g. aliases
 # if [ -n "$CUSTOM_ALIASES_URL" ]; then
 #     curl -fsSL "$CUSTOM_ALIASES_URL" -o "$HOME/.aliases.zsh"
